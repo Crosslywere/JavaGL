@@ -1,0 +1,21 @@
+{
+  "build": "release",
+  "mode": "maven",
+  "selectedAddons": [
+    "joml"
+  ],
+  "platform": [
+    "windows"
+  ],
+  "descriptions": true,
+  "compact": false,
+  "hardcoded": false,
+  "javadoc": true,
+  "includeJSON": true,
+  "source": true,
+  "osgi": false,
+  "language": "groovy",
+  "preset": "minimal-opengl",
+  "version": "3.3.6",
+  "versionLatest": "3.3.6"
+}
