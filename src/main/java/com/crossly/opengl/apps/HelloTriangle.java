@@ -1,4 +1,4 @@
-package com.crossly.opengl;
+package com.crossly.opengl.apps;
 
 import org.lwjgl.opengl.GL;
 
