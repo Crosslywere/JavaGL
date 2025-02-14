@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.lwjgl.opengl.GL33.*;
+import static org.lwjgl.opengl.GL42.*;
 
 public class ShaderProgram {
 
@@ -140,6 +140,28 @@ public class ShaderProgram {
 				String shader = new String(shaderStream.readAllBytes());
 				shaderStream.close();
 				return this.geometryShaderSource(shader);
+			}
+			catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+
+		public ShaderProgramBuilder tessellationShaderSource(String source) {
+			int shader = glCreateShader(GL_TESS_CONTROL_SHADER);
+			glShaderSource(shader, source);
+			glCompileShader(shader);
+			validateShaderCompilation(shader);
+			glAttachShader(program, shader);
+			return this;
+		}
+
+		public ShaderProgramBuilder tessellationShaderFile(String sourceFilePath) {
+			try {
+				InputStream shaderStream = ShaderProgram.class.getClassLoader().getResourceAsStream(sourceFilePath);
+				assert shaderStream != null;
+				String shader = new String(shaderStream.readAllBytes());
+				shaderStream.close();
+				return tessellationShaderSource(shader);
 			}
 			catch (IOException e) {
 				throw new RuntimeException(e);
