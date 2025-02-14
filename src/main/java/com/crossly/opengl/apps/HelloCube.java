@@ -64,23 +64,28 @@ public class HelloCube {
 			glfwSetWindowShouldClose(window, true); // Close window on escape pressed
 		}
 		Vector3f movement = new Vector3f();
+		float speed = 2.5f;
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-			movement.z += 1f; // Move forward
+			movement.add(camera.getFront()); // Move forward
 		}
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-			movement.z -= 1f; //Move backward
+			movement.sub(camera.getFront()); // Move backward
 		}
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-			movement.x -= 1f; // Move left
+			movement.sub(camera.getRight()); // Move left
 		}
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-			movement.x += 1f; // Move right
+			movement.add(camera.getRight()); // Move right
 		}
 		movement.normalize();
+		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+			movement.add(camera.getUp()); // Move up
+		}
+		if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
+			movement.sub(camera.getUp()); // Move down
+		}
 		if (movement.length() > 0) {
-			var pos = camera.getPosition()
-					.add(camera.getFront().mul(movement.z * deltaTime))
-					.add(camera.getRight().mul(movement.x * deltaTime));
+			var pos = camera.getPosition().add(movement.mul(speed * deltaTime));
 			camera.setPosition(pos);
 		}
 	}

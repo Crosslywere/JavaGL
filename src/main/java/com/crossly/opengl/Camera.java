@@ -8,9 +8,8 @@ public class Camera {
 	private static final Vector3f WORLD_UP = new Vector3f(0f, 1f, 0f);
 
 	private Vector3f position;
-	private Vector3f front = new Vector3f();
+	private final Vector3f front = new Vector3f();
 	private Vector3f right;
-	private Vector3f up;
 
 	private float pitch = 0f;
 	private float yaw = 90f;
@@ -26,7 +25,6 @@ public class Camera {
 		front.z = (float)(Math.sin(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)));
 		front.normalize();
 		right = new Vector3f(front).cross(WORLD_UP).normalize();
-		up = new Vector3f(right).cross(this.front).normalize();
 	}
 
 	public Matrix4f getViewMat() {
@@ -47,7 +45,7 @@ public class Camera {
 	}
 
 	public Vector3f getUp() {
-		return new Vector3f(up);
+		return new Vector3f(WORLD_UP);
 	}
 
 	public Vector3f getRight() {
