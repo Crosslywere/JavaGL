@@ -151,7 +151,7 @@ public class HelloCube {
 			deltaTime = (float)(now - past);
 			past = now;
 			processInput(); // Processing inputs
-			glClear(GL_COLOR_BUFFER_BIT); // Clearing the color channel
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clearing the color channel and the depth channel
 			shader.setMat4("view", camera.getViewMat()); // The rendering view matrix
 			shader.setMat4("model", new Matrix4f()); // The model matrix
 			glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0); // Drawing the cube
