@@ -5,6 +5,7 @@ import com.crossly.opengl.ShaderProgram;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -42,19 +43,22 @@ public class HelloCube {
 
 		glfwMakeContextCurrent(window); // Setting the window as the opengl context
 		glfwSwapInterval(1); // Vsync on
-		glfwSetCursorPosCallback(window, (window, mx, my) -> {
-			// Calculating the offsets
-			float xOffset = (float)mx - mousePos.x;
-			float yOffset = mousePos.y - (float)my;
-			mousePos.x = (float)mx;
-			mousePos.y = (float)my;
-			if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // Hide the mouse whilst the left mouse is pressed
-				// incrementing the offsets based on time delta
-				camera.setYaw(camera.getYaw() + (xOffset * deltaTime));
-				camera.setPitch(camera.getPitch() + (yOffset * deltaTime));
-			} else {
-				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); // Unhide the mouse when the left mouse is released
+		glfwSetCursorPosCallback(window, new GLFWCursorPosCallback() {
+			@Override
+			public void invoke(long window, double mx, double my) {
+				// Calculating the offsets
+				float xOffset = (float)mx - mousePos.x;
+				float yOffset = mousePos.y - (float)my;
+				mousePos.x = (float)mx;
+				mousePos.y = (float)my;
+				if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+					glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // Hide the mouse whilst the left mouse is pressed
+					// incrementing the offsets based on time delta
+					camera.setYaw(camera.getYaw() + (xOffset * 2.5f * deltaTime));
+					camera.setPitch(camera.getPitch() + (yOffset * deltaTime));
+				} else {
+					glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); // Unhide the mouse when the left mouse is released
+				}
 			}
 		});
 	}
